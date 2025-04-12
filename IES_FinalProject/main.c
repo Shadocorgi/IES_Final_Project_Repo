@@ -57,6 +57,6 @@ int main(void) {
     {
         // AMOGUS
         // OMNIMAN
-        // "If he's invincible, why can I see him?"
+        print("balls");
     }
 }
