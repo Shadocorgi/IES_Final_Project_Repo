@@ -1,18 +1,16 @@
+// Final Project Code for IES
 #include <driverlib.h>
 
-void system_init();
+
+void system_init(); // All function initializations
 
 
 int main(void) {
-
     RGB_setColor(0, 0, 255); // Blue for idle system
+    system_init();
     while(1)
-    {
+    {       
         
-        // AMOGUS
-        // OMNIMAN
-        
-
     }
 }
 
