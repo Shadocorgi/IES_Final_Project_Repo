@@ -27,7 +27,7 @@ void system_init(); // All function initializations
 int main(void) {
     RGB_setColor(0, 0, 255); // Blue for idle system
     system_init();
-    while(1)
+    while(1) // while loop
     {       
 
     }
