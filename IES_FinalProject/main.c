@@ -28,8 +28,8 @@ int main(void) {
     RGB_setColor(0, 0, 255); // Blue for idle system
     system_init();
     while(1)
-    {       
-
+    {          
+        
     }
 }
 
@@ -63,4 +63,49 @@ void setRGBLED(char Red, char Green, char Blue){
     TB3CCR3 = Red << 2;
     TB3CCR2 = Green << 2;
     TB3CCR1 = Blue << 2;
+}
+//=======================================================================================================
+
+void power_on() {
+    
+}
+
+void UART_init() {
+
+}
+
+void therm_Init() {
+
+}
+
+void pot_Init() {
+
+}
+
+void flame_Init() {
+
+}
+
+void heat_init() {
+
+}
+
+void RGB_init() {
+
+}
+
+void ignitor_init() {
+
+}
+
+void PilotValve_init() {
+
+}
+
+void MainValve_init() {
+
+}
+
+void I2C_init() {
+
 }
