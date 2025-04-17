@@ -27,12 +27,20 @@
    // Set initial system status
     RGB_setColor(0, 0, 255); // Blue for idle system
 
+
+
+
+
 int main(void) {
+    WDTCTL = WDTPW | WDTHOLD;  // Stop watchdog timer
+    system_init();    
     RGB_setColor(0, 0, 255); // Blue for idle system
-    system_init();
+    
+    
     while(1)
     {          
         
+
     }
 }
 
