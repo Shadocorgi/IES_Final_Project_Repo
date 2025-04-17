@@ -21,8 +21,11 @@
 //***************************************************************************************
 
 #include <driverlib.h>
+#include "systemInit.h"
 
-void system_init(); // All function initializations
+//void system_init(); // All function initializations
+   // Set initial system status
+    RGB_setColor(0, 0, 255); // Blue for idle system
 
 int main(void) {
     RGB_setColor(0, 0, 255); // Blue for idle system
@@ -33,79 +36,29 @@ int main(void) {
     }
 }
 
-void system_init(){
-    power_on();
-    UART_init();
-    therm_Init();
+//==================================================================================================
 
-    pot_Init();
-    flame_Init();//thermocouple
-    heat_init(); //thermostat ("Call for heat")
-
-    RGB_init();
-    ignitor_init();
-    PilotValve_init();
-
-    MainValve_init();
-    I2C_init(); //If using any I2C peripherals
-    //-----------------------------------------\\
-   // Set initial system status
-    RGB_setColor(0, 0, 255); // Blue for idle system
-}
-
-void RGB_init(){
-    P6DIR |= BIT0 | BIT1 | BIT2;              // P6.0-P6.2 output
-    P6SEL0 |= BIT0 | BIT1 | BIT2;
-    P6SEL1 &= ~(BIT0 | BIT1 | BIT2);          // P6.0-P6.2 options select
-}
-
-void setRGBLED(char Red, char Green, char Blue){
+void RGB_setColor(char Red, char Green, char Blue){
     TB3CCR3 = Red << 2;
     TB3CCR2 = Green << 2;
     TB3CCR1 = Blue << 2;
-}
-//=======================================================================================================
+}//done
+
+//==================================================================================================
 
 void power_on() {
     
-}
+} // power
 
-void UART_init() {
-
-}
-
-void therm_Init() {
-
-}
-
-void pot_Init() {
-
-}
-
-void flame_Init() {
-
-}
-
-void heat_init() {
-
-}
-
-void RGB_init() {
-
-}
-
-void ignitor_init() {
-
-}
-
-void PilotValve_init() {
-
-}
-
-void MainValve_init() {
-
-}
-
-void I2C_init() {
-
-}
+// All of these functions are transferred to headers
+// void UART_init()       {} 
+// void therm_Init()      {}
+// void pot_Init()        {}
+// void flame_Init()      {}
+// void heat_init()       {}
+// void RGB_init()        {}
+// void ignitor_init()    {}
+// void PilotValve_init() {}
+// void MainValve_init()  {}
+// void I2C_init()        {}
+// void RGB_init()        {}
