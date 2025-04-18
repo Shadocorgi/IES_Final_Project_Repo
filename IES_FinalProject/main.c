@@ -17,49 +17,58 @@
 - Potentiometer - P1.5
 - Thermocouple - P1.3
 
-*/
-//***************************************************************************************
+*///***************************************************************************************
 
 #include <driverlib.h>
+#include <msp430.h>
 #include "systemInit.h"
 
-//void system_init(); // All function initializations
-   // Set initial system status
-    RGB_setColor(0, 0, 255); // Blue for idle system
+//declare functions
+// void delay_cycles(); is implemented from msp430.h
+void RGB_setColor();
 
+void igniterOn();
+void igniterOff();
 
-
+void heatCall();
+void PilotValve_off();
+void MainValve_set(int valveposition);
 
 
 int main(void) {
+    // Initialization
     WDTCTL = WDTPW | WDTHOLD;  // Stop watchdog timer
     system_init();    
-    RGB_setColor(0, 0, 255); // Blue for idle system
+    RGBsetColor(0, 0, 255); // Blue for idle system
     
-    
+    //Main Code
     while(1)
-    {          
+    {
         
-
     }
 }
 
 //==================================================================================================
+//define functions
 
-void RGB_setColor(char Red, char Green, char Blue){
+void RGBsetColor(char Red, char Green, char Blue){
     TB3CCR3 = Red << 2;
     TB3CCR2 = Green << 2;
     TB3CCR1 = Blue << 2;
 }//done
 
+void igniterOn(){}
+void igniterOff(){}
+
+void heatCall(){}
+void PilotValve_off(){}
+void MainValve_set(int valveposition){}
+
 //==================================================================================================
 
-void power_on() {
-    
-} // power
-
 // All of these functions are transferred to headers
-// void UART_init()       {} 
+// void RGB_init()        {} 
+// void UART_init()       {}  
 // void therm_Init()      {}
 // void pot_Init()        {}
 // void flame_Init()      {}
@@ -69,4 +78,3 @@ void power_on() {
 // void PilotValve_init() {}
 // void MainValve_init()  {}
 // void I2C_init()        {}
-// void RGB_init()        {}
