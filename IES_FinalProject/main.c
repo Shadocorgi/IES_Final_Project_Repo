@@ -25,12 +25,14 @@
 #include "Init Headers/flameInit.h"
 #include "systemInit.h"
 //==================================================================================================
+//NOTE: uint8_t is a datatype representing 8 digit binary numbers from 0-255, increases processing speed (supposedly)
 //Color Definitions
 #define BLUE 0, 0, 255
 #define RED 255, 0, 0
 #define GREEN 0, 255, 0
 #define YELLOW 255, 255, 0
 //STARTUP
+void RGB_setColor(uint8_t red, uint8_t green, uint8_t blue, );
 void heat_call();        // Thermostat requests heat
 void PilotValve_on();    // Open Gas Valve
 void ignitor_on();       // Ignite Pilot
@@ -65,13 +67,13 @@ int main(void) {
 				}
 				
 			else{
-				RGB_setColor(RED)                // STATE: Error (no flame)
+				RGB_setColor(RED);               // STATE: Error (no flame)
 				PilotValve_off();                // Turn pilot gas off
 				ignitor_off();                   // Turn ignitor off
 			}
 		} else {                                 // No heat requested
 			RGB_setColor(BLUE);                  // STATE: Idle
-			MainValve_set(0)                     // Close Main Valve
+			MainValve_set(0);                    // Close Main Valve
 			PilotValve_off();                    // Ensure pilot gas valve is closed
 			ignitor_off();                       // Ensure ignitor is off
 		}
