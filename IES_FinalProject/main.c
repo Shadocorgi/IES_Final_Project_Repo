@@ -52,8 +52,9 @@ ignitor_off();
 int main(void) {
     // Initialization
     WDTCTL = WDTPW | WDTHOLD;  // Stop watchdog timer
+    
     system_init();    
-    RGBsetColor(BLUE);                       // STATE: Idle
+    RGBsetColor(BLUE);                            // STATE: Idle
    if(heat_call()){                               // Thermostat requests heat
 				RGB_setColor(YELLOW);             // HEAT REQUEST STATE
 				PilotValve_On();                  // Open pilot gas valve
@@ -64,7 +65,7 @@ int main(void) {
 				if(flame_Detect()){               // Ignited Pilot Success
 					RGB_setColor(GREEN);          // STATE: Heating
 					PilotValve_off();             // Turn off pilot lighter
-					MainValve_set(valvePosition); // Open main valve	
+					MainValve_set(30);            // Open main valve	
 				}
 				
 			else{
@@ -92,14 +93,14 @@ void RGBsetColor(char Red, char Green, char Blue){
     TB3CCR1 = Blue << 2;
 }//done
 
-void heatCall(){ // P3.0-Call Heat
-    return 0;
+bool heatCall(){ // P3.0-Call Heat (Thermostat)
+    return true;
 }
 bool flame_detect(){ // P1.6-Thermistor 
     return 0;
 }
 void ignitorOn(){ // P1.3-Thermocouple
-    
+    P1OUT 
 }
 void ignitorOff(){ // P1.3-Thermocouple
     return 0;
@@ -114,7 +115,11 @@ int pot_Read(){ // P1.5-Potentiometer
     return 0;
 }
 void MainValve_set(int valveposition){ // P2.1-Servo
-    return 0;
+    // Configure Timer B1
+    TB1CCR0 = 330;                             // PWM Period/2 (sets ~50Hz at 32kHz ACLK)
+    TB1CCTL2 = OUTMOD_7;                       // TB1.2 reset/set output mode
+    TB1CCR2 = valveposition;                   // PWM duty cycle (~7.5% for servo center)
+    TB1CTL = TBSSEL__ACLK | MC_3;              // ACLK, up-down mode
 }
 
 //==================================================================================================
