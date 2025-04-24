@@ -26,6 +26,7 @@
 #include "systemInit.h"
 //==================================================================================================
 //NOTE: uint8_t is a datatype representing 8 digit binary numbers from 0-255, increases processing speed (supposedly)
+//FUNCTIONS DECLARATIONS
 //Color Definitions
 #define BLUE 0, 0, 255
 #define RED 255, 0, 0
@@ -52,32 +53,32 @@ int main(void) {
     // Initialization
     WDTCTL = WDTPW | WDTHOLD;  // Stop watchdog timer
     system_init();    
-    RGBsetColor(0, 0, 255);                      // STATE: Idle
-   if(heat_call()){                              // Thermostat requests heat
-				RGB_setColor(YELLOW);            // HEAT REQUEST STATE
-				PilotValve_On();                 // Open pilot gas valve
-				//delay_ms(200);                 // DELAY - Wait for gas to release
-				ignitor_on();                    // Ignite Pilot
-				//delay_ms(500);                 // DELAY - Wait for ignition to stabilize
+    RGBsetColor(BLUE);                       // STATE: Idle
+   if(heat_call()){                               // Thermostat requests heat
+				RGB_setColor(YELLOW);             // HEAT REQUEST STATE
+				PilotValve_On();                  // Open pilot gas valve
+				//delay_ms(200);                  // DELAY - Wait for gas to release
+				ignitor_on();                     // Ignite Pilot
+				//delay_ms(500);                  // DELAY - Wait for ignition to stabilize
 				
-				if(flame_Detect()){              // Ignited Pilot Success
-					RGB_setColor(GREEN);         // STATE: Heating
-					PilotValve_off();            // Turn off pilot lighter
-					MainValve_set(valvePosition);// Open main valve	
+				if(flame_Detect()){               // Ignited Pilot Success
+					RGB_setColor(GREEN);          // STATE: Heating
+					PilotValve_off();             // Turn off pilot lighter
+					MainValve_set(valvePosition); // Open main valve	
 				}
 				
 			else{
-				RGB_setColor(RED);               // STATE: Error (no flame)
-				PilotValve_off();                // Turn pilot gas off
-				ignitor_off();                   // Turn ignitor off
+				RGB_setColor(RED);                // STATE: Error (no flame)
+				PilotValve_off();                 // Turn pilot gas off
+				ignitor_off();                    // Turn ignitor off
 			}
-		} else {                                 // No heat requested
-			RGB_setColor(BLUE);                  // STATE: Idle
-			MainValve_set(0);                    // Close Main Valve
-			PilotValve_off();                    // Ensure pilot gas valve is closed
-			ignitor_off();                       // Ensure ignitor is off
+		} else {                                  // No heat requested
+			RGB_setColor(BLUE);                   // STATE: Idle
+			MainValve_set(0);                     // Close Main Valve
+			PilotValve_off();                     // Ensure pilot gas valve is closed
+			ignitor_off();                        // Ensure ignitor is off
 		}
-		//delay_ms(1000);                        // DELAY - Wait b4 next loop cycle
+		//delay_ms(1000);                         // DELAY - Wait b4 next loop cycle
 	}
 	return 0;
 }
@@ -90,17 +91,31 @@ void RGBsetColor(char Red, char Green, char Blue){
     TB3CCR2 = Green << 2;
     TB3CCR1 = Blue << 2;
 }//done
-void heatCall(){}
-bool flame_detect(){}
 
-void igniterOn(){}
-void igniterOff(){}
-
-void PilotValve_On(){}
-void PilotValve_off(){}
-
-int pot_Read(){}
-void MainValve_set(int valveposition){}
+void heatCall(){ // P3.0-Call Heat
+    return 0;
+}
+bool flame_detect(){ // P1.6-Thermistor 
+    return 0;
+}
+void ignitorOn(){ // P1.3-Thermocouple
+    
+}
+void ignitorOff(){ // P1.3-Thermocouple
+    return 0;
+}
+void PilotValve_On(){ // P5.4-Solenoid
+    return 0;
+}
+void PilotValve_off(){ // P5.4-Solenoid
+    return 0;
+}
+int pot_Read(){ // P1.5-Potentiometer
+    return 0;
+}
+void MainValve_set(int valveposition){ // P2.1-Servo
+    return 0;
+}
 
 //==================================================================================================
 
