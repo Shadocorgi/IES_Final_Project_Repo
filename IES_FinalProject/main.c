@@ -22,7 +22,6 @@
 //***************************************************************************************
 #include <driverlib.h>
 #include <msp430.h>
-#include "Init Headers/flameInit.h"
 #include "systemInit.h"
 //==================================================================================================
 //NOTE: uint8_t is a datatype representing 8 digit binary numbers from 0-255, increases processing speed (supposedly)
@@ -54,33 +53,33 @@ int main(void) {
     WDTCTL = WDTPW | WDTHOLD;  // Stop watchdog timer
     
     system_init();    
-    RGBsetColor(BLUE);                            // STATE: Idle
-   if(heat_call()){                               // Thermostat requests heat
-				RGB_setColor(YELLOW);             // HEAT REQUEST STATE
-				PilotValve_On();                  // Open pilot gas valve
-				//delay_ms(200);                  // DELAY - Wait for gas to release
-				ignitor_on();                     // Ignite Pilot
-				//delay_ms(500);                  // DELAY - Wait for ignition to stabilize
+    RGBsetColor(BLUE);                    // STATE: Idle
+   if(heat_call()){                       // Thermostat requests heat
+		RGB_setColor(YELLOW);             // HEAT REQUEST STATE
+		PilotValve_On();                  // Open pilot gas valve
+		//delay_ms(200);                  // DELAY - Wait for gas to release
+		ignitor_on();                     // Ignite Pilot
+		//delay_ms(500);                  // DELAY - Wait for ignition to stabilize
 				
-				if(flame_Detect()){               // Ignited Pilot Success
-					RGB_setColor(GREEN);          // STATE: Heating
-					PilotValve_off();             // Turn off pilot lighter
-					MainValve_set(30);            // Open main valve	
-				}
-				
-			else{
-				RGB_setColor(RED);                // STATE: Error (no flame)
-				PilotValve_off();                 // Turn pilot gas off
-				ignitor_off();                    // Turn ignitor off
-			}
-		} else {                                  // No heat requested
-			RGB_setColor(BLUE);                   // STATE: Idle
-			MainValve_set(0);                     // Close Main Valve
-			PilotValve_off();                     // Ensure pilot gas valve is closed
-			ignitor_off();                        // Ensure ignitor is off
+		if(flame_Detect()){               // Ignited Pilot Success
+			RGB_setColor(GREEN);          // STATE: Heating
+			PilotValve_off();             // Turn off pilot lighter
+			MainValve_set(30);            // Open main valve	
 		}
-		//delay_ms(1000);                         // DELAY - Wait b4 next loop cycle
+				
+		else{
+			RGB_setColor(RED);            // STATE: Error (no flame)
+			PilotValve_off();             // Turn pilot gas off
+			ignitor_off();                // Turn ignitor off
+		}
+	} 
+	else {                                // No heat requested
+			RGB_setColor(BLUE);           // STATE: Idle
+			MainValve_set(0);             // Close Main Valve
+			PilotValve_off();             // Ensure pilot gas valve is closed
+			ignitor_off();                // Ensure ignitor is off
 	}
+	//delay_ms(1000);                     // DELAY - Wait b4 next loop cycle
 	return 0;
 }
 

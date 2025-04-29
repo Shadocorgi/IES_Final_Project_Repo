@@ -1,6 +1,6 @@
-#ifndef Flame_H
-#define Flame_H
+#ifndef Igniter_H
+#define Igniter_H
 
-void flame_init(void);
+void igniter_init(void);
 
 #endif

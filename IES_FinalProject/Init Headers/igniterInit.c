@@ -1,7 +1,7 @@
 #include <msp430.h>
-#include "flameInit.h"
+#include "igniterInit.h"
 
-void flame_init(void){
+void igniter_init(void){
     P1DIR |= BIT3;  // Input BTN Px.y
     P1OUT |= BIT3;  // Init state of 0
     P1REN |= BIT3;  // Enable Pull-up Resistor
