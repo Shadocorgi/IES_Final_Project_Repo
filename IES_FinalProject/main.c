@@ -10,7 +10,7 @@
 	- Blue: P6.2
 - Red LED - P5.0
 
-- Pilot/Solenoid - 5.4 
+- Pilot/Solenoid - 5.4 	
 - Call Heat - P3.0
 - Servo Motor - P2.1
 
@@ -32,7 +32,7 @@
 #define GREEN 0, 255, 0
 #define YELLOW 255, 255, 0
 //STARTUP
-void RGB_setColor(uint8_t red, uint8_t green, uint8_t blue, );
+void RGB_setColor(uint8_t red, uint8_t green, uint8_t blue);
 void heat_call();        // Thermostat requests heat
 void PilotValve_on();    // Open Gas Valve
 void ignitor_on();       // Ignite Pilot
@@ -54,20 +54,20 @@ int main(void) {
     
     system_init();    
     RGBsetColor(BLUE);                    // STATE: Idle
-   if(heat_call()){                       // Thermostat requests heat
+   if(heat_call()){                       // Thermostat requests a light
 		RGB_setColor(YELLOW);             // HEAT REQUEST STATE
 		PilotValve_On();                  // Open pilot gas valve
 		//delay_ms(200);                  // DELAY - Wait for gas to release
 		ignitor_on();                     // Ignite Pilot
 		//delay_ms(500);                  // DELAY - Wait for ignition to stabilize
 				
-		if(flame_Detect()){               // Ignited Pilot Success
+		if(flame_Detect()){               // Ignited Pilot Success (hi)
 			RGB_setColor(GREEN);          // STATE: Heating
 			PilotValve_off();             // Turn off pilot lighter
 			MainValve_set(30);            // Open main valve	
 		}
 				
-		else{
+		else{							  // (lo)
 			RGB_setColor(RED);            // STATE: Error (no flame)
 			PilotValve_off();             // Turn pilot gas off
 			ignitor_off();                // Turn ignitor off
@@ -92,26 +92,26 @@ void RGBsetColor(char Red, char Green, char Blue){
     TB3CCR1 = Blue << 2;
 }//done
 
-bool heatCall(){ // P3.0-Call Heat (Thermostat)
-    return true;
+bool heat_Call(){ 				// P3.0-Call Heat (Activate Button)
+    return ~(P1IN & BIT6); 		// Call for a light when there's no flame
 }
-bool flame_detect(){ // P1.6-Thermistor 
-    return 0;
+bool flame_detect(){ 			// P1.6-Thermistor 
+    return (P1IN & BIT6);		// TRUE if P1.6 returns a signal
 }
-void ignitorOn(){ // P1.3-Thermocouple
-    P1OUT 
+int pot_Read(){ 				// P1.5-Potentiometer
+    return (P1OUT & BIT5);		// Read the altered values of the potentiometer
 }
-void ignitorOff(){ // P1.3-Thermocouple
-    return 0;
+void ignitorOn(){ 				// P1.3-Thermocouple
+    P1OUT |= BIT3;				// Output a signal at P1.3
 }
-void PilotValve_On(){ // P5.4-Solenoid
-    return 0;
+void ignitorOff(){			    // P1.3-Thermocouple
+    P1OUT &= ~BIT3;				// Shut off signals outputting from P1.3
 }
-void PilotValve_off(){ // P5.4-Solenoid
-    return 0;
+void PilotValve_On(){ 			// P5.4-Solenoid
+    P5OUT |= BIT4;				// Output a signal at P5.4
 }
-int pot_Read(){ // P1.5-Potentiometer
-    return 0;
+void PilotValve_off(){ 			// P5.4-Solenoid
+    P5OUT &= ~BIT4;				// Shut off signals outputting from P5.4
 }
 void MainValve_set(int valveposition){ // P2.1-Servo
     // Configure Timer B1
