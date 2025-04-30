@@ -95,36 +95,36 @@ int main(void) {
 */
 //==================================================================================================
 //define functions
-bool heat_call(){ 				// P1.6-Call Heat (Activate Button)
-    return ~(P1IN & BIT6); 		// Call for a light when there's no flame (uses thermistor)
-}
-bool flame_detect(){ 			// P1.6-Thermistor 
-    return (P1IN & BIT6);		// TRUE if P1.6 returns a signal
-}
-int pot_read(){ 				// P1.5-Potentiometer
-    return (P1IN & BIT5);		// Read the altered values of the potentiometer
-}
+bool heat_call(){return ~(P1IN & BIT6);}				// P1.6-Call Heat (Activate Button)
+// Call for a light when there's no flame (uses thermistor)
+
+bool flame_detect(){return (P1IN & BIT6);} 			// P1.6-Thermistor 
+// TRUE if P1.6 returns a signal
+
+int pot_read(){return (P1IN & BIT5);}			// P1.5-Potentiometer
+// Read the altered values of the potentiometer
+// Must be an ADC signal, is currently a digital signal. Must be changed.
 
 
 
-void RGB_setColor(uint8_t Red, uint8_t Green, uint8_t Blue){
+void RGB_setColor(uint8_t Red, uint8_t Green, uint8_t Blue){ // [P6.0 - P6.2] Adjust RGB Values
     TB3CCR3 = Red << 2;
     TB3CCR2 = Green << 2;
     TB3CCR1 = Blue << 2;
 }
-void ignitor_on(){ 				// P1.3-Thermocouple
-    P1OUT |= BIT3;				// Output a signal at P1.3
-}
-void ignitor_off(){			    // P1.3-Thermocouple
-    P1OUT &= ~BIT3;				// Shut off signals outputting from P1.3
-}
-void pilotValve_on(){ 			// P5.4-Solenoid
-    P5OUT |= BIT4;				// Output a signal at P5.4
-}
-void pilotValve_off(){ 			// P5.4-Solenoid
-    P5OUT &= ~BIT4;				// Shut off signals outputting from P5.4
-}
-void mainValve_set(int valveposition){ // P2.1-Servo
+void ignitor_on(){P1OUT |= BIT3;} 		// P1.3-Thermocouple
+// Output a signal at P1.3
+
+void ignitor_off(){P1OUT &= ~BIT3;} 	// P1.3-Thermocouple
+// Shut off signals outputting from P1.3
+
+void pilotValve_on(){P5OUT |= BIT4;}	// P5.4-Solenoid
+// Output a signal at P5.4
+
+void pilotValve_off(){P5OUT &= ~BIT4;}	// P5.4-Solenoid
+// Shut off signals outputting from P5.4
+
+void mainValve_set(int valveposition){ 	// P2.1-Servo
     // Configure Timer B1
     TB1CCR0 = 330;                             // PWM Period/2 (sets ~50Hz at 32kHz ACLK)
     TB1CCTL2 = OUTMOD_7;                       // TB1.2 reset/set output mode
