@@ -44,7 +44,7 @@ int pot_read();
 void mainValve_set(int valvePosition);
 
 //No Flame
-
+void ignitor_off();
 
 //==================================================================================================
 int main(void) {
