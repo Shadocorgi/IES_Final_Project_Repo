@@ -22,7 +22,7 @@
 //***************************************************************************************
 #include <driverlib.h>
 #include <msp430.h>
-#include "systemInit.h"
+#include "init_headers/systemInit.h"
 //==================================================================================================
 //NOTE: uint8_t is a datatype representing 8 digit binary numbers from 0-255, increases processing speed (supposedly)
 //FUNCTIONS DECLARATIONS
@@ -56,7 +56,7 @@ int main(void) {
 	
 	
 	    
-    RGB_setColor(BLUE);                    // STATE: Idle
+    RGB_setColor(BLUE);                   // STATE: Idle
    if(heat_call()){                       // Thermostat requests a light
 		RGB_setColor(YELLOW);             // HEAT REQUEST STATE
 		pilotValve_on();                  // Open pilot gas valve
