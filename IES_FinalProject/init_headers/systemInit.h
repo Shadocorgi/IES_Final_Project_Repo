@@ -9,6 +9,7 @@
 #include "RGBInit.h"
 #include "servoInit.h"
 #include "thermInit.h"
+#include "LEDInit.h"
 
 void system_init(void);
 

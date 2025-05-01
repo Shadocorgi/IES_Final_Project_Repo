@@ -10,4 +10,5 @@ void system_init()
     RGB_init();
     servo_init();
     therm_init();
+    LED_init();
 }
